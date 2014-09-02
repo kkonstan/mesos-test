@@ -1,0 +1,10 @@
+---
+- name: docker key 
+  apt_key: id=36A1D7869245C8950F966E92D8576A8BA88D21E9 keyserver=keyserver.ubuntu.com
+
+- name: docker repo
+  apt_repository: repo='deb https://get.docker.io/ubuntu docker main'
+
+- name: docker package
+  apt: name=lxc-docker
+  when: mesos_role == "slave"

@@ -5,6 +5,8 @@
 
   roles:
      - { role: mesos }
+     - { role: marathon }
+     - { role: docker }
 
   tasks:
     - name: sane hosts file

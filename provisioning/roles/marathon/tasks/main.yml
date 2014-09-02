@@ -1,0 +1,8 @@
+---
+- name: mesosphere marathon package
+  apt: name=marathon
+  when: mesos_role == "master"
+
+- name: ensure marathon is running
+  service: name=marathon state=started enabled=yes
+  when: mesos_role == "master"
