@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  sudo: True
+
+  roles:
+     - { role: mesos }
+
+  tasks:
+    - name: sane hosts file
+      lineinfile: dest=/etc/hosts regexp='.*{{ inventory_hostname }}$' line="{{ bind }} {{ inventory_hostname }}" state=present
+      when: bind is defined

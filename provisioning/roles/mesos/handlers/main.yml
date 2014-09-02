@@ -1,0 +1,9 @@
+---
+
+- name: restart mesos-master
+  service: name=mesos-master state=restarted enabled=yes sleep=3
+  when: mesos_role == "master"
+
+- name: restart mesos-slave
+  service: name=mesos-slave state=restarted enabled=yes sleep=3
+  when: mesos_role == "slave"

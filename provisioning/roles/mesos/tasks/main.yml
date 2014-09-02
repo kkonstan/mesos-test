@@ -1,0 +1,57 @@
+---
+- name: mesosphere key 
+  apt_key: id=E56151BF keyserver=keyserver.ubuntu.com
+
+- name: mesosphere repo
+  apt_repository: repo='deb http://repos.mesosphere.io/ubuntu trusty main'
+
+- name: mesosphere mesos package
+  apt: name=mesos
+
+- name: point mesos to master zookeeper
+  lineinfile: dest=/etc/mesos/zk regexp="^zk.*$" line="zk://192.168.77.11:2181/mesos"
+  notify:
+    - restart mesos-master
+    - restart mesos-slave
+
+- name: ensure zookeper starts
+  service: name=zookeeper state=started enabled=yes
+
+- name: set mesos cluster name
+  lineinfile: dest=/etc/default/mesos regexp="^CLUSTER=.*$" line="CLUSTER={{ mesos_cluster }}"
+  notify:
+    - restart mesos-master
+    - restart mesos-slave
+  when: mesos_cluster is defined
+
+- name: ensure mesos-master is running
+  service: name=mesos-master state=started enabled=yes
+  when: mesos_role == "master"
+
+- name: ensure mesos-master isn't running
+  service: name=mesos-master state=stopped enabled=no
+  when: mesos_role == "slave"
+
+- name: ensure mesos-master starts at boot
+  file: dest=/etc/init/mesos-master.override state=absent
+  when: mesos_role == "master"
+
+- name: ensure mesos-master doesn't start at boot
+  lineinfile: dest=/etc/init/mesos-master.override regexp="^manual$" line="manual" create=yes
+  when: mesos_role == "slave"
+
+- name: ensure mesos-slave isn't running
+  service: name=mesos-slave state=stopped enabled=no
+  when: mesos_role == "master"
+
+- name: ensure mesos-slave is running
+  service: name=mesos-slave state=started enabled=yes
+  when: mesos_role == "slave"
+
+- name: ensure mesos-slave doesn't start at boot
+  lineinfile: dest=/etc/init/mesos-slave.override regexp="^manual$" line="manual" create=yes
+  when: mesos_role == "master"
+
+- name: ensure mesos-slave starts at boot
+  file: dest=/etc/init/mesos-slave.override state=absent
+  when: mesos_role == "slave"
