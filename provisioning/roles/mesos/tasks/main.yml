@@ -9,7 +9,7 @@
   apt: name=mesos
 
 - name: point mesos to master zookeeper
-  lineinfile: dest=/etc/mesos/zk regexp="^zk.*$" line="zk://192.168.77.11:2181/mesos"
+  lineinfile: dest=/etc/mesos/zk regexp="^zk.*$" line="{{ mesos_zookeeper }}"
   notify:
     - restart mesos-master
     - restart mesos-slave

@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "private_network", ip: "192.168.77.1#{i}"
       node.vm.provision "ansible" do |ansible|
         ansible.playbook = "provisioning/playbook.yml"
-        ansible.extra_vars = { bind: "192.168.77.1#{i}", mesos_cluster: "test", mesos_role: "master" }
+        ansible.extra_vars = { bind: "192.168.77.1#{i}", mesos_cluster: "test", mesos_role: "master", mesos_zookeeper: "zk://192.168.77.11:2181/mesos" }
       end
     end
   end
@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "private_network", ip: "192.168.77.2#{i}"
       node.vm.provision "ansible" do |ansible|
         ansible.playbook = "provisioning/playbook.yml"
-        ansible.extra_vars = { bind: "192.168.77.2#{i}", mesos_cluster: "test", mesos_role: "slave" }
+        ansible.extra_vars = { bind: "192.168.77.2#{i}", mesos_cluster: "test", mesos_role: "slave", mesos_zookeeper: "zk://192.168.77.11:2181/mesos" }
       end
     end
   end
