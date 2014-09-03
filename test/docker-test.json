@@ -1,0 +1,14 @@
+{
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "kkonstan/docker-test"
+    }
+  },
+  "id": "echo",
+  "instances": "1",
+  "cpus": "0.5",
+  "mem": "128",
+  "uris": [],
+  "cmd": ""
+}

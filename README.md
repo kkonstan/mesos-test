@@ -20,4 +20,8 @@ Vagrant & Ansible are used to provision 3 Ubuntu 14.04 LTS (Trusty Tahr) VMs wit
 
 - git clone
 - vagrant up
-- visit http://192.168.77.11:5050/#/ to confirm the status of the cluster.
+- visit http://192.168.77.11:5050/ to confirm the status of the mesos cluster.
+- visit http://192.168.77.11:8080/ to confirm the status of marathon.
+
+To start the test docker app, run start-docker-test under test/ which will create an app called /echo and assign it a random port.
+Selecting the app on marathon console will reveal the slave/port it's running on so it can be tested
