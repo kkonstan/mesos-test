@@ -24,4 +24,4 @@ Vagrant & Ansible are used to provision 3 Ubuntu 14.04 LTS (Trusty Tahr) VMs wit
 - visit http://192.168.77.11:8080/ to confirm the status of marathon.
 
 To start the test docker app, run start-docker-test under test/ which will create an app called /echo and assign it a random port.
-Selecting the app on marathon console will reveal the slave/port it's running on so it can be tested
+To test the test docker app, run test-docker-test which will use marathon's rest api to query host/port and echo a test string to it.
