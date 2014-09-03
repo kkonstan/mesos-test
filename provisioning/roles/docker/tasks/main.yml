@@ -8,3 +8,15 @@
 - name: docker package
   apt: name=lxc-docker
   when: mesos_role == "slave"
+
+- name: enable mesos docker containerizer
+  lineinfile: dest=/etc/mesos-slave/containerizers regexp="^docker,mesos$" line="docker,mesos" create=yes
+  when: mesos_role == "slave"
+  notify:
+    - restart mesos-slave
+
+- name: increase executor registration timeout to 15 min
+  lineinfile: dest=/etc/mesos-slave/executor_registration_timeout regexp="^15mins$" line="15mins" create=yes
+  when: mesos_role == "slave"
+  notify:
+    - restart mesos-slave
