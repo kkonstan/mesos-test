@@ -1,6 +1,6 @@
 ---
 - name: mesosphere key 
-  apt_key: id=E56151BF keyserver=keyserver.ubuntu.com
+  apt_key: id=E56151BF keyserver=hkp://keyserver.ubuntu.com:80
 
 - name: mesosphere repo
   apt_repository: repo='deb http://repos.mesosphere.io/ubuntu trusty main'
