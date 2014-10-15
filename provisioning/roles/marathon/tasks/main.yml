@@ -1,8 +1,6 @@
 ---
 - name: mesosphere marathon package
   apt: name=marathon
-  notify:
-    - replace marathon
   when: mesos_role == "master"
 
 - name: ensure marathon is running

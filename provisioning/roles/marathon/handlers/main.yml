@@ -3,11 +3,3 @@
 - name: restart marathon
   service: name=marathon state=restarted enabled=yes sleep=3
   when: mesos_role == "master"
-
-# latest version, 0.60.1, doesn't support docker so I built a snapshot as a temp workaround
-- name: replace marathon
-  get_url: url=https://s3-eu-west-1.amazonaws.com/kkonstan-files/marathon-runnable-0.7.0-SNAPSHOT-20140902.jar dest=/usr/local/bin/marathon mode=0755 force=yes
-  notify:
-    - restart marathon
-    - restart mesos-master
-  when: mesos_role == "master"
